@@ -1,0 +1,23 @@
+day -1
+
+npm i react-router-dom bootstrap react-bootstrap react-icons
+
+
+day -2
+
+npm i json-server --save-dev
+
+in package.json
+write in = "start-server": "json-server ./data.json --port 4000 --watch"
+
+command= npm run start-server 
+
+
+day -3
+
+npm i axios
+
+
+day -5
+
+npm i react-hook-form
