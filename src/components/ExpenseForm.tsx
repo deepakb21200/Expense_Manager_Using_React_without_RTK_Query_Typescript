@@ -1,9 +1,15 @@
-import  { useState } from 'react'
+import { useEffect, useState, type FC } from 'react'
 import { Button, Form } from 'react-bootstrap';
 import type { Expense } from '../type';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
-function ExpenseForm() {
+interface ExpenseFormProps {
+    onSubmitForm: (inputData: Expense) => Promise<boolean>
+    expense?: Expense | null
+}
+
+const ExpenseForm: FC<ExpenseFormProps> = ({ onSubmitForm, expense }) => {
     const [succesMsg, setSuccesMsg] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const {
@@ -13,13 +19,53 @@ function ExpenseForm() {
         formState: { errors }
     } = useForm<Expense>();
 
-    const onSubmit = (data: Expense) => {
+    const { id, description, expense_amount, expense_date, expense_type } =
+        expense || {};
+
+    useEffect(() => {
+        reset({
+            expense_type,
+            expense_amount,
+            description,
+            expense_date
+        });
+    }, [id]);
+
+
+    let navigate = useNavigate()
+
+    const onSubmit = async (data: Expense) => {
         console.log("dataa", data);
-        
+        let isSucess = await onSubmitForm(data)
+
+        if (isSucess) {
+            if (!expense) {
+                // reset for add expense
+                reset();
+            }
+            setErrorMsg("")
+            setSuccesMsg(`Expense ${expense ? 'updated' : 'added'} successfully.`);
+            setTimeout(() => {
+                setSuccesMsg("")
+                navigate("/")
+            }, 3000);
+            console.log("success");
+
+        }
+        else {
+            setSuccesMsg("")
+            setErrorMsg(
+                `Error while ${expense ? 'updating' : 'adding'
+                } expense. Try again later.`
+            );
+            console.log("failure");
+
+        }
+
 
     }
     return (
-        <Form  onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)}>
             {succesMsg && <p className='success-msg'>{succesMsg}</p>}
             {errorMsg && <p className='error-msg'>{errorMsg}</p>}
             <Form.Group className='mb-3' controlId='expense_type'>
@@ -79,8 +125,7 @@ function ExpenseForm() {
             </Form.Group>
             <Form.Group>
                 <Button type='submit' variant='success'>
-                    {/* {expense ? 'Update' : 'Add'} */}
-                    Expense
+                    {expense ? 'Update' : 'Add'} Expense
                 </Button>
             </Form.Group>
         </Form>

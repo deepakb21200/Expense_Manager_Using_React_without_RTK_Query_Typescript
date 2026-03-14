@@ -1,27 +1,12 @@
 {
-    "expenses": [
-        {
-            "id": 1,
-            "expense_type": "card",
-            "expense_date": "2026-03-12",
-            "expense_amount": 1000,
-            "description": "Electricity Bill"
-        },
-
-          {
-            "id": 2,
-            "expense_type": "card",
-            "expense_date": "2026-03-13",
-            "expense_amount": 500,
-            "description": "Internet Bill"
-        },
-
-         {
-            "id": 3,
-            "expense_type": "cash",
-            "expense_date": "2026-03-14",
-            "expense_amount": 10000,
-            "description": "Personal Expense"
-        }
-    ]
+  "expenses": [
+    {
+      "id": "1c21",
+      "expense_type": "cash",
+      "expense_amount": "300",
+      "description": "Coffee Date",
+      "expense_date": "2026-03-13"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
