@@ -48,7 +48,7 @@ const ExpenseForm: FC<ExpenseFormProps> = ({ onSubmitForm, expense }) => {
             setTimeout(() => {
                 setSuccesMsg("")
                 navigate("/")
-            }, 3000);
+            }, 2000);
             console.log("success");
 
         }

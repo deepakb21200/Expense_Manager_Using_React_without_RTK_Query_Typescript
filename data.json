@@ -3,9 +3,16 @@
     {
       "id": "1c21",
       "expense_type": "cash",
-      "expense_amount": "300",
+      "expense_amount": "1300",
       "description": "Coffee Date",
       "expense_date": "2026-03-13"
+    },
+    {
+      "id": "9c54",
+      "expense_type": "cash",
+      "expense_amount": "1200",
+      "description": "hjyuhjm",
+      "expense_date": "2026-03-19"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import Layout from "./components/Layout"
 import ExpenseList from "./components/ExpenseList"
 import AddExpense from "./components/AddExpense"
-import SearchExpense from "./components/SearchExpense"
+import SearchExpense from "./components/SearchExpenses"
 import Profile from "./components/Profile"
 import { useEffect, useState } from "react"
 import axios from "axios"
@@ -37,8 +37,17 @@ function App() {
     getExpenses()
   }, [refresh])
 
+
+
+  useEffect(() => {
+    console.log(refresh);
+    
+  }, [refresh])
+
   const handleRefresh = () => {
     setRefresh((refresh) => !refresh);
+    console.log("done");
+    
   };
   return (
     <BrowserRouter>
@@ -51,7 +60,7 @@ function App() {
 
 
 
-          <Route path="/search" element={<SearchExpense />} />
+          <Route path="/search" element={<SearchExpense  expenses={expenses} handleRefresh={handleRefresh}/>} />
           <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<Navigate to="/" />} />
 
