@@ -21,3 +21,14 @@ npm i axios
 day -5
 
 npm i react-hook-form
+
+
+
+
+note -day 14 me batya hai ki event function me jo parameter me uska type dekhna ho to 
+jaha function call hoga hume vhaha inline function declare karna hoga like this{(event)=>{}}
+and event me mouse hover kardena type pata lagjaayega 
+
+
+
+regex101 best website

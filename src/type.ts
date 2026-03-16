@@ -5,3 +5,10 @@ export interface Expense{
     expense_amount: number;
     description: string;
 }
+
+
+export interface UserProfile{
+    firstName:string
+    lastName:string
+    email:string
+}

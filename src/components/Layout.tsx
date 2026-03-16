@@ -3,15 +3,18 @@ import Sidebar from "./Sidebar"
 
 interface LayoutProps{
     children: React.ReactNode
+    isLoggedIn:boolean
+    setIsLoggedIn:(data:boolean)=>void
 }
 
 
-function Layout({children}:LayoutProps) {
+function Layout({children, isLoggedIn,setIsLoggedIn}:LayoutProps) {
     return (
         <div className="main">
+            {isLoggedIn &&
             <div className="left">
-                <Sidebar/>
-            </div>
+                <Sidebar setIsLoggedIn={setIsLoggedIn}/>
+            </div>}
 
 
             <div className="right">

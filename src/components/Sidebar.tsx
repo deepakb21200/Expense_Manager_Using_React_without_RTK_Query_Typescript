@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { AiFillHome, AiOutlineLogout } from 'react-icons/ai';
 import { BiAddToQueue } from 'react-icons/bi';
@@ -6,9 +6,16 @@ import { BsFillPersonFill } from 'react-icons/bs';
 import { FiSearch } from 'react-icons/fi';
 import "../CSS/Sidebar.css"
 
- 
+interface SidebarProps{
+  setIsLoggedIn:(data:boolean)=>void
+}
 
-function Sidebar() {
+function Sidebar({setIsLoggedIn}:SidebarProps) {
+    const navigate = useNavigate();
+   const handleLogout = () => {
+    setIsLoggedIn(false);
+    navigate('/');
+  };
   return (
     <ul className={`list  `}  >
       <li className='list-item'>
@@ -36,7 +43,7 @@ function Sidebar() {
         </NavLink>
       </li>
       <li className='list-item'>
-        <Link to='/'>
+        <Link to='/' onClick={handleLogout}>
           <AiOutlineLogout size={25} className='icon' />
           <div>Logout</div>
         </Link>

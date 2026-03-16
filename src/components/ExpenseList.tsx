@@ -19,7 +19,7 @@ function ExpenseList({ loading, error, expenses , handleRefresh}: ExpenseListPro
         expenses.length > 0 ? (
           <ExpenseTable expenses={expenses} handleRefresh={handleRefresh} />
         ) : (
-          !loading && <p className="no-expense">No expenses found. Please add some expenses.</p>
+          !loading && !error && <p className="error-msg">No expenses found. Please add some expenses.</p>
         )
       }
     </div>
