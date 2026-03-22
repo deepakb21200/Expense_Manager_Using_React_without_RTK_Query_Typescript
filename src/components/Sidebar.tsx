@@ -1,25 +1,38 @@
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { AiFillHome, AiOutlineLogout } from 'react-icons/ai';
 import { BiAddToQueue } from 'react-icons/bi';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { FiSearch } from 'react-icons/fi';
 import "../CSS/Sidebar.css"
+ 
+
+import { useMode } from '../custom-hooks/useMode';
+
+
 
 interface SidebarProps{
   setIsLoggedIn:(data:boolean)=>void
 }
 
-function Sidebar({setIsLoggedIn}:SidebarProps) {
+function  Sidebar({setIsLoggedIn}:SidebarProps) {
     const navigate = useNavigate();
+  
+  const { state } = useLocation();
+  
+      const { selectedMode, toogleMode } = useMode();
+
+   
+     console.log(selectedMode);
+    
    const handleLogout = () => {
     setIsLoggedIn(false);
     navigate('/');
   };
   return (
-    <ul className={`list  `}  >
+    <ul className={`list ${selectedMode} `}  >
       <li className='list-item'>
-        <NavLink to='/' >
+        <NavLink to='/' className={state === '/' ? 'active' : ''}>
           <AiFillHome size={25} className='icon' />
           <div>Dashboard</div>
         </NavLink>
@@ -31,7 +44,7 @@ function Sidebar({setIsLoggedIn}:SidebarProps) {
         </NavLink>
       </li>
       <li className='list-item'>
-        <NavLink to='/search' >
+        <NavLink to='/search' className={state === '/search' ? 'active' : ''}>
           <FiSearch size={25} className='icon' />
           <div>Search Expense</div>
         </NavLink>
@@ -49,7 +62,8 @@ function Sidebar({setIsLoggedIn}:SidebarProps) {
         </Link>
       </li>
       <li className='list-item'>
-        <Button variant='info' className='mode-toggle'>
+        <Button variant='info' className='mode-toggle'
+         onClick={toogleMode}>
           Toggle Dark / Light Mode
         </Button>
       </li>

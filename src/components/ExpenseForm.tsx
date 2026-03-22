@@ -2,7 +2,7 @@ import { useEffect, useState, type FC } from 'react'
 import { Button, Form } from 'react-bootstrap';
 import type { Expense } from '../type';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface ExpenseFormProps {
     onSubmitForm: (inputData: Expense) => Promise<boolean>
@@ -12,6 +12,7 @@ interface ExpenseFormProps {
 const ExpenseForm: FC<ExpenseFormProps> = ({ onSubmitForm, expense }) => {
     const [succesMsg, setSuccesMsg] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
+    const { state } = useLocation();
     const {
         register,
         handleSubmit,
@@ -45,11 +46,20 @@ const ExpenseForm: FC<ExpenseFormProps> = ({ onSubmitForm, expense }) => {
             }
             setErrorMsg("")
             setSuccesMsg(`Expense ${expense ? 'updated' : 'added'} successfully.`);
+            // setTimeout(() => {
+            //     setSuccesMsg("")
+            //     navigate("/")
+            // }, 2000);
+            // console.log("success");
+
             setTimeout(() => {
-                setSuccesMsg("")
-                navigate("/")
+                setSuccesMsg('');
+                if (state === '/search') {
+                    navigate('/search');
+                } else {
+                    navigate('/');
+                }
             }, 2000);
-            console.log("success");
 
         }
         else {

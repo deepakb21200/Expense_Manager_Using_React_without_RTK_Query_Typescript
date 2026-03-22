@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+import type { Mode } from '../hooks/contextapi/Theme';
 
 
-const useLocalStorage = (key: string, initialValue: boolean) => {
+const useLocalStorage = (key: string, initialValue: boolean | Mode) => {
     const [value, setValue] = useState(() => {
         try {
             console.log("inside  ");

@@ -1,3 +1,4 @@
+import { useMode } from "../custom-hooks/useMode"
 import Sidebar from "./Sidebar"
 
 
@@ -9,15 +10,16 @@ interface LayoutProps{
 
 
 function Layout({children, isLoggedIn,setIsLoggedIn}:LayoutProps) {
+    let {selectedMode}=useMode()
     return (
         <div className="main">
             {isLoggedIn &&
-            <div className="left">
+            <div className={`left ${selectedMode}`}>
                 <Sidebar setIsLoggedIn={setIsLoggedIn}/>
             </div>}
 
 
-            <div className="right">
+            <div className={`right ${selectedMode}`}>
                 {children}
             </div>
         </div>

@@ -32,3 +32,15 @@ and event me mouse hover kardena type pata lagjaayega
 
 
 regex101 best website
+
+
+default export hona hoga  like expenselist component
+
+like this export default ExpenseList
+
+export const ExpenseList()=>{
+
+} this is wrong
+
+
+

@@ -15,7 +15,9 @@ interface ExpenseTableProps {
 function ExpenseTable({ expenses, handleRefresh }: ExpenseTableProps) {
     const [errorMsg, setErrorMsg] = useState('');
     const [deleteIndex, setDeleteIndex] = useState(-1);
-    const { pathname } = useLocation();
+    const {pathname}  = useLocation();
+    console.log(pathname);
+    
 
 
 
@@ -74,7 +76,7 @@ function ExpenseTable({ expenses, handleRefresh }: ExpenseTableProps) {
                                 </td>
 
                                 <td>
-                                    <Link to={`/edit/${id}`}>
+                                    <Link to={`/edit/${id}`} state={pathname}>
                                         <Button variant="info" size="sm"
                                             className='button btn-edit'>
                                             Edit

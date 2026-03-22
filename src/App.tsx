@@ -1,20 +1,13 @@
+import   {   Suspense, useEffect, useState } from "react"
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
-import Layout from "./components/Layout"
-import ExpenseList from "./components/ExpenseList"
-import AddExpense from "./components/AddExpense"
-import SearchExpense from "./components/SearchExpenses"
-import Profile from "./components/Profile"
-import { useEffect, useState } from "react"
 import axios from "axios"
 import { BASE_API_URL } from "./utils/constants"
-import EditExpense from "./components/EditExpense"
-import Register from "./components/Register"
-import Login from "./components/Login"
-import useLocalStorage from "./custom-hooks/Session"
-import PrivateRoute from "./components/PrivateRoute"
+import { AddExpense, EditExpense, ExpenseList, Layout, Login, PrivateRoute, Profile, Register, SearchExpense } from "./Dynamicimports";
+import useLocalStorage from "./custom-hooks/Session";
+import  { ModeContextProvider } from "./hooks/contextapi/Theme";
+ 
 
-
-let sleep = () => new Promise((resolve) => setTimeout(resolve, 3000));
+// let sleep = () => new Promise((resolve) => setTimeout(resolve, 3000));
 
 function App() {
   const [expenses, setExpenses] = useState([])
@@ -22,6 +15,8 @@ function App() {
   const [error, setError] = useState("")
   const [refresh, setRefresh] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false)
+  const [selectedTheme, setSelectedTheme] = useLocalStorage('selectedTheme','light');
+
   useEffect(() => {
     async function getExpenses() {
       try {
@@ -47,10 +42,10 @@ function App() {
 
 
 
-  useEffect(() => {
-    console.log(refresh);
+  // useEffect(() => {
+  //   console.log(refresh);
 
-  }, [refresh])
+  // }, [refresh])
 
   const handleRefresh = () => {
     setRefresh((refresh) => !refresh);
@@ -58,51 +53,57 @@ function App() {
 
   };
   return (
-    <BrowserRouter>
-      <Layout isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
-        <Routes>
-          <Route path="/" element={
-            isLoggedIn ? <ExpenseList loading={loading} error={error} expenses={expenses} handleRefresh={handleRefresh} />
-              : <Login setIsLoggedIn={setIsLoggedIn} />
-          } />
-          <Route path="/add" element={
-            isLoggedIn ?<AddExpense handleRefresh={handleRefresh} />
-            : <Login setIsLoggedIn={setIsLoggedIn}/>
-          } />
+    // <ModeContext.Provider value={{selectedMode, toogleMode}}>
+        <ModeContextProvider selectedTheme={selectedTheme} setSelectedTheme={setSelectedTheme}>
+          <BrowserRouter>
+      <Suspense fallback={<p className="loading">loading...</p>}>
+        <Layout isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}>
+          <Routes>
+            <Route path="/" element={
+              isLoggedIn ? <ExpenseList loading={loading} error={error} expenses={expenses} handleRefresh={handleRefresh} />
+                : <Login setIsLoggedIn={setIsLoggedIn} />
+            } />
+            <Route path="/add" element={
+              isLoggedIn ? <AddExpense handleRefresh={handleRefresh} />
+                : <Login setIsLoggedIn={setIsLoggedIn} />
+            } />
 
-          <Route path="/edit/:id" element={
-            <PrivateRoute isLoggedIn={isLoggedIn}>
-              <EditExpense handleRefresh={handleRefresh} />
-            </PrivateRoute>
-          } />
-
-
-
-          <Route path="/search" element={
-            <PrivateRoute isLoggedIn={isLoggedIn}>
-            <SearchExpense loading={loading} error={error} expenses={expenses} handleRefresh={handleRefresh} />
-            </PrivateRoute>}/>
+            <Route path="/edit/:id" element={
+              <PrivateRoute isLoggedIn={isLoggedIn}>
+                <EditExpense handleRefresh={handleRefresh} />
+              </PrivateRoute>
+            } />
 
 
-          <Route path="/profile" element={
-            <PrivateRoute isLoggedIn={isLoggedIn}>
-              <Profile/>
-            </PrivateRoute>
-            
-          } />
-          <Route path="/register" element={
-            !isLoggedIn ? <Register setIsLoggedIn={setIsLoggedIn} />: <Navigate to="/"/>
-          } />
-          <Route path="/login" element={
-            !isLoggedIn ? <Login setIsLoggedIn={setIsLoggedIn} /> :
-            <Navigate to="/"/>
-          } />
-          <Route path="*" element={<Navigate to="/" />} />
+
+            <Route path="/search" element={
+              <PrivateRoute isLoggedIn={isLoggedIn}>
+                <SearchExpense loading={loading} error={error} expenses={expenses} handleRefresh={handleRefresh} />
+              </PrivateRoute>} />
 
 
-        </Routes>
-      </Layout>
+            <Route path="/profile" element={
+              <PrivateRoute isLoggedIn={isLoggedIn}>
+                <Profile />
+              </PrivateRoute>
+
+            } />
+            <Route path="/register" element={
+              !isLoggedIn ? <Register setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/" />
+            } />
+            <Route path="/login" element={
+              !isLoggedIn ? <Login setIsLoggedIn={setIsLoggedIn} /> :
+                <Navigate to="/" />
+            } />
+            <Route path="*" element={<Navigate to="/" />} />
+
+
+          </Routes>
+        </Layout>
+
+      </Suspense>
     </BrowserRouter>
+    </ModeContextProvider>
   )
 }
 

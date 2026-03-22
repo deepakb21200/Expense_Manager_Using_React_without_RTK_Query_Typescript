@@ -6,6 +6,13 @@
       "expense_amount": "444423",
       "description": "Shopping",
       "expense_date": "2026-03-16"
+    },
+    {
+      "id": "7dc5",
+      "expense_type": "card",
+      "expense_amount": "400",
+      "description": "deepak",
+      "expense_date": "2026-03-21"
     }
   ],
   "profile": {
@@ -19,6 +26,6 @@
       "email": "mike@example.com",
       "password": "test1234"
     }
-   ],
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }
